@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="http://bits-oasis.org/hackiton/css/learnPageStyles.css">
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+        <style>
+        .searchCaption {
+            position: relative;
+float: left;
+height: 100%;
+width: 45%;
+margin-top: 25px;
+padding-left: 210px;
+font-size: 35px;
+color: white;
+font-weight: 700;
+text-align: right;
+text-shadow: 1px 1px black;
+        }
+
+        </style>
+
+    </head>
+    
+    <body > 
+        <div id="mainHeader" class="mainHeader" >
+            <a href="http://bits-oasis.org/2014/descoverify/"><div id="title"> discoverify. </div></a>
+            {% if user.is_authenticated %}
+                        <a href="http://bits-oasis.org/2014/discoverify/profile/">
+            <div id="loggedInModole" class="enterMod loggedInModule" style="width: auto" >
+                <div id="pic" style="background-image: url('http://bits-oasis.org/hackiton/img/about.png') ; height : 50px ; width: 50px; background-size : 50px; float: left ; margin-top : 5px ; margin-right : 10px"></div>
+                {{ user.username }}
+            </div></a>
+            <a href="http://bits-oasis.org/2014/discoverify/logmeout/">
+            <div id="logoutModole" class="enterMod logoutModule">
+                Logout
+            </div></a>
+            <a href="http://bits-oasis.org/2014/discoverify/createwizard/">
+            <div id="logoutModole" class="enterMod logoutModule">
+                Create a Path
+            </div></a>
+
+
+
+            {% else %}
+
+ <a href="http://bits-oasis.org/hackiton/login.html"> <div id="loginModole" class="enterMod loginModule"> 
+                Login
+            </div></a>
+            <a href="http://bits-oasis.org/hackiton/register.html">
+            <div id="registerModole" class="enterMod registerModule" >
+                Register
+            </div> </a>
+            {% endif %}
+        </div>
+        
+        
+        <div id="centerPic" class="centerPic" style="background-image:url('http://bits-oasis.org/hackiton/img/bgd.jpeg')">
+            <div id="searchWrapper" class="searchWrapper">
+                <div id="searchCaption" class="searchCaption" >
+                    Ascend your practical skills to a new level with Learning Paths... Designed by people with hands-on experience.
+                </div>
+                <div id="searchInnerWrapper">
+                    <div id="searchBox" class="searchBox">
+                        <input id="seachInput" class="searchInput" name=q/>
+                        <img src="http://bits-oasis.org/hackiton/img/search.png" id="searchBut" />
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div id="current Course">
+            Currently Live Courses : 
+            <ul>
+                <li><a href="http://bits-oasis.org/2014/discoverify/path/1/">Javascript</a></li>
+                <li><a href="http://bits-oasis.org/2014/discoverify/path/1/">Guide to Web Development for Beginners</a></li>
+            </ul>
+        </div>
+      
+        
+    </body>
+
+</html>

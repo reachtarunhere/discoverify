@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./css/learnPageStyles.css">
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <link rel="stylesheet" href="./css/medium-editor.css">
+    <link rel="stylesheet" href="./css/default.css">
+    </head>
+    
+    <body> 
+        <div id="mainHeader" class="mainHeader">
+            <div id="title"> discoverify. </div>
+            {% if user.is_authenticated != True %}
+            <div id="loginModole" class="enterMod loginModule" href="http://bits-oasis.org/2014/hackiton/login.html">
+                Login
+            </div>
+            <div id="registerModole" class="enterMod registerModule" href="http://bits-oasis.org/hackiton/register.html">
+                Register
+            </div>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <div id="loggedInModole" class="enterMod loggedInModule" style="width: auto">
+                <div id="pic" style="background-image: url('http://bits-oasis.org/hackiton/img/about.png') ; height : 50px ; width: 50px; background-size : 50px; float: left ; margin-top : 5px ; margin-right : 10px"></div>
+                {{ user.username }}
+            </div>
+            <div id="logoutModole" class="enterMod logoutModule" href="http://bits-oasis.org/2014/discoverify/logmeout/">
+                Logout
+            </div>
+            {% endif %}
+
+        </div>
+
+
+        <div id="container">
+
+        <input type="text" hidden name="path_id" value="" id="hiddenID"/>
+
+        <h1>Description</h1>
+        <div class="editable1" backend="long_description" id="editDesc">
+            <h2>First Editor </h2>
+            <p>This text is a <b>paragraph</b> with some <a href="http://www.w3schools.com/jsref/dom_obj_all.asp"><i>tags elements</i></a></p>
+        </div>
+
+        <button class="submit" id="submitDesc">Submit Description</button>
+        
+        <h1>Pre - requisites</h1>
+        <div class="editable2"  backend="prereq" id="editPrereq">
+            <h2>First Editor </h2>
+            <p>This text is a <b>paragraph</b> with some <a href="http://www.w3schools.com/jsref/dom_obj_all.asp"><i>tags elements</i></a></p>
+        </div>
+
+        <button class="submit" id="submitPrereq">Submit Prereqs</button>
+        
+        
+        <h1>Learning Outcomes</h1>
+        <div class="editable3"  backend="outcomes" id="editOutcomes">
+            <h2>First Editor </h2>
+            <p>This text is a <b>paragraph</b> with some <a href="http://www.w3schools.com/jsref/dom_obj_all.asp"><i>tags elements</i></a></p>
+        </div>
+
+        <button class="submit" id="submitOutcomes">Submit Outcomes</button>
+        
+        
+
+        <h1>Frequently asked Questions</h1>
+        <div class="editable4" backend="faq" id="editFaq">
+            <h2>First Editor </h2>
+            <p>This text is a <b>paragraph</b> with some <a href="http://www.w3schools.com/jsref/dom_obj_all.asp"><i>tags elements</i></a></p>
+        </div>
+
+        <button class="submit" id="submitfaq">Submit FAQ</button>
+        <br>
+        
+        <textarea name="tags"  backend="tags" id="editTags"> </textarea>
+
+        <button class="submit" id="submitTags">Submit Tags</button>
+        
+        <br>
+        <textarea name="shortDesc" backend="short_description" id="editShort"> </textarea>
+
+        <button class="submit" id="submitShort">Submit Short Description</button>
+        
+
+
+        </div>
+    
+    <script src="./js/medium-editor.min.js"></script>
+    <script>
+        var editor1 = new MediumEditor('.editable1');
+        var editor2 = new MediumEditor('.editable2');
+        var editor3 = new MediumEditor('.editable3');
+        var editor4 = new MediumEditor('.editable4');
+
+        $(".submit").click(function() {
+            var identity = $(this).attr("id");
+            var identity = identity.substring(6);
+            var content = $("#edit"+identity).html();
+            var route = $("#edit"+identity).attr("backend");
+            console.log(content);
+            console.log(route);
+
+        });
+
+
+    </script>
+   
+    </body>
+
+</html>

@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="http://bits-oasis.rog/hackiton/css/learnPageStyles.css">
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    </head>
+    
+    <body style="overflow: hidden"> 
+        <div id="mainHeader" class="mainHeader">
+            <div id="title"> discoverify. </div>
+        </div>
+        
+        <img src="http://bits-oasis.rog/hackiton/img/registerBack.png"  class="registerBack"/>
+        
+        <div id="registerText" class="registerText">
+            Sign up to discover(ify) new paths that will help you mastering skills.
+        </div>
+        
+        <div id="registerBox" class="registerBox">
+            <div id="fbTag" class="fbTag">Sign in with Facebook</div>
+                <a title="Facebook" onclick="facebookLogin(); return false;"><img src="./img/fbsign.png" alt="Click Here" class="FBbutton" /> </a>
+                <br>
+                <div style="color: #aaa; font-size: 15px; margin: 10px; text-align: center; font-weight: normal;">-----------or----------</div>
+		        <form id="regDetail" action="http://bits-oasis.org/2014/discoverify/register/" method="POST">
+		        	<input hidden name="link" id="fbLink">
+		        	<input type="text" placeholder="Name" class="field" name="name" id="userName" required><br>
+		        	<input type="email" placeholder="Email" class="field" name="email" id="userEmail" required><br>
+		        	<input type="password" placeholder="Password" class="field" name="password" id="userPass" required><br>
+                    <input type="submit" id="submitForm" class="submit" value="Sign Up">
+		        </form>
+        </div>
+   
+        
+
+        
+        
+    </body>
+
+</html>

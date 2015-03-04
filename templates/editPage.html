@@ -1,0 +1,384 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="http://bits-oasis.org/hackiton/css/learnPageStyles.css">
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <link rel="stylesheet" href="http://bits-oasis.org/hackiton/css/medium-editor.css">
+    	<link rel="stylesheet" href="http://bits-oasis.org/hackiton/css/default.css">
+
+    	<style>
+    		#stepContainer {
+    			display : none;
+    		}
+
+    		#contentList {
+    			position: relative;
+    			float: right;
+    			width: 350px;
+    			padding: 0px 20px;
+    			margin-right: 10px;
+    			margin-top: 70px;
+    			border-left: 1px dashed #bbb;
+    		}
+
+    		#mainWrapper {
+    			position: relative;
+    			float: left;
+    			margin-left: 60px;
+    			width: 750px;
+    			margin-top: 70px;
+    			border: 1px solid #ddd;
+    			background-color: #fcfcfc;
+    			padding: 20px 50px;
+    		}
+
+    		.contentItem {
+    			padding: 5px;
+    			cursor: pointer;
+    		}
+
+    		.addStep {
+    			margin-bottom: 20px;
+    		}
+
+    		.sbsp {
+    			margin: 0px !important;
+    		}
+
+    		.editable1 .editable2 .editable2 .editable4 {
+    			padding: 5px;
+    			border: 1px solid #eee;
+    		}
+
+    	</style>
+    </head>
+    
+    <body> 
+        <div id="mainHeader" class="mainHeader">
+            <div id="title"> discoverify. 
+            </div>
+            
+
+{% if user.is_authenticated %}
+                        <a href="http://bits-oasis.org/2014/discoverify/profile/">
+            <div id="loggedInModole" class="enterMod loggedInModule" style="width: auto" >
+                <div id="pic" style="background-image: url('http://bits-oasis.org/hackiton/img/about.png') ; height : 50px ; width: 50px; background-size : 50px; float: left ; margin-top : 5px ; margin-right : 10px"></div>
+                {{ user.username }}
+            </div></a>
+            <a href="http://bits-oasis.org/2014/discoverify/logmeout/">
+            <div id="logoutModole" class="enterMod logoutModule">
+                Logout
+            </div></a>
+            <a href="http://bits-oasis.org/2014/discoverify/createwizard/">
+            <div id="logoutModole" class="enterMod logoutModule">
+                Create a Path
+            </div></a>
+
+
+
+            {% else %}
+
+ <a href="http://bits-oasis.org/hackiton/login.html"> <div id="loginModole" class="enterMod loginModule"> 
+                Login
+            </div></a>
+            <a href="http://bits-oasis.org/hackiton/register.html">
+            <div id="registerModole" class="enterMod registerModule" >
+                Register
+            </div> </a>
+            {% endif %}
+
+            
+        </div>
+        <input type="text" hidden name="path_id" value="{{ selected_path.id }}" id="hiddenID"/>
+
+		<div id="contentList">
+			<div id="linkPage" style="margin-bottom: 20px">
+				<a target="_blank" href="http://bits-oasis.org/2014/discoverify/path/{{ selected_path.id }}/">Checkout your Learner's Page</a>
+			</div>
+			<div id="content0" class="contentItem">General Information</div>
+			<br>
+			<button id="addStep" class="addStep">Add New Step !</button>
+			
+			<br>
+			{% for x in all_steps %}
+			<div id="content{{ x.number }}"  uniqueStepId="{{ x.id }}" class="contentItem">Step {{ x.number }} : {{ x.short_description }}</div>
+			{% endfor %}
+		</div>
+
+		<div id="mainWrapper">
+	        <div id="container">
+		        <h1>Description</h1>
+		        <div class="editable1" backend="long_description" id="editDesc">{% autoescape off %}{{ selected_path.long_description }}{% endautoescape %}</div>
+		        <button class="submit sbsp" id="submitDesc">Submit Description</button>
+		        
+		        <h1>Pre - requisites</h1>
+		        <div class="editable2"  backend="prereq" id="editPrereq">{% autoescape off %}{{ selected_path.prereq }}{% endautoescape %}</div>
+		        <button class="submit sbsp" id="submitPrereq">Submit Prerequisites</button>
+		        	        
+		        <h1>Learning Outcomes</h1>
+		        <div class="editable3"  backend="outcomes" id="editOutcomes">{% autoescape off %}{{ selected_path.outcomes }}{% endautoescape %}</div>
+				<button class="submit sbsp" id="submitOutcomes">Submit Outcomes</button>
+		       
+		        <h1>Frequently asked Questions</h1>
+		        <div class="editable4" backend="faq" id="editFaq">{% autoescape off %}{{ selected_path.faq }}{% endautoescape %}</div>
+				<button class="submit sbsp" id="submitfaq">Submit FAQ</button>
+		        
+		        <br>
+		        <br>
+		        
+		        <h1>Tags</h1>
+		        <textarea name="tags"  backend="tags" id="editTags"  style="width: 500px; height : 100px"> {{ tags }}</textarea>
+		        <br>
+				<button class="submit sbsp" id="submitTags">Submit Tags</button>
+		        <br>
+		        <h1>Short-Description</h1>
+		        <textarea name="shortDesc" backend="short_description" id="editShort" style="width: 500px; height : 100px"> {{ selected_path.short_description }}</textarea><br>
+				<button class="submit sbsp" id="submitShort">Submit Short Description</button>
+	        </div>
+	        <div id="stepContainer">
+	        	<input type="text" id="stepID" hidden>
+	        	<input type="text" id="stepName" ><br><br>
+	        	<textarea type="text" id="stepDesc" style="width: 500px; height : 100px"></textarea><br>
+	        	Resources : 
+	        	<div id="resources">
+	        		<div id="resource1" class="resourceWrapper">
+		        		<select name="resourceType1" id="resourceType1" class="resourceType">
+							<option value="video">Video</option>
+							<option value="book">Book</option>
+							<option value="blog">Blog</option>
+							<option value="misc">Misc</option>
+						</select>
+						<input type="text" id="resourceLink1" class="resourceLink">
+	        		</div>
+	        		<div id="resource2" class="resourceWrapper">
+		        		<select name="resourceType2" id="resourceType2" class="resourceType">
+							<option value="video">Video</option>
+							<option value="book">Book</option>
+							<option value="blog">Blog</option>
+							<option value="misc">Misc</option>
+						</select>
+						<input type="text" id="resourceLink2" class="resourceLink">
+	        		</div>
+	        		<div id="resource3" class="resourceWrapper">
+		        		<select name="resourceType3" id="resourceType3" class="resourceType">
+							<option value="video">Video</option>
+							<option value="book">Book</option>
+							<option value="blog">Blog</option>
+							<option value="misc">Misc</option>
+						</select>
+						<input type="text" id="resourceLink3" class="resourceLink">
+	        		</div>
+	        		<div id="resource4" class="resourceWrapper">
+		        		<select name="resourceType4" id="resourceType4" class="resourceType">
+							<option value="video">Video</option>
+							<option value="book">Book</option>
+							<option value="blog">Blog</option>
+							<option value="misc">Misc</option>
+						</select>
+						<input type="text" id="resourceLink4" class="resourceLink">
+	        		</div>
+	        	
+	        	<button id="saveStep">Save</button>
+	        </div>
+	    </div>
+    
+    <script src="http://bits-oasis.org/hackiton/js/medium-editor.min.js"></script>
+    <script>
+        var editor1 = new MediumEditor('.editable1');
+        var editor2 = new MediumEditor('.editable2');
+        var editor3 = new MediumEditor('.editable3');
+        var editor4 = new MediumEditor('.editable4');
+        
+        $(".submit").click(function() {
+            var pageid = $("#hiddenID").val();
+            var identity = $(this).attr("id");
+            var identity = identity.substring(6);
+            var content = $("#edit"+identity).html();
+            var route = $("#edit"+identity).attr("backend");
+            if(route == "long_description")
+            	var dat = {
+                    "long_description" : content , 
+                    "path_id" : pageid , 
+                }
+               else if(route == "prereq")
+            	var dat = {
+                    "prereq" : content , 
+                    "path_id" : pageid , 
+                } 
+                else if(route == "outcomes")
+            	var dat = {
+                    "outcomes" : content , 
+                    "path_id" : pageid , 
+                }
+                else if(route == "faq")
+            	var dat = {
+                    "faq" : content , 
+                    "path_id" : pageid , 
+                }
+                else if(route == "tags")
+            	var dat = {
+                    "tags" : content , 
+                    "path_id" : pageid , 
+                }
+                else if(route == "short_description")
+            	var dat = {
+                    "short_description" : content , 
+                    "path_id" : pageid , 
+                }
+
+
+            $.ajax({
+                url : "http://bits-oasis.org/2014/discoverify/updatepath/",
+                data : dat,
+                dataType : "json",
+                type : "POST" , 
+                success : function(data) {
+                    console.log(data);
+                }
+            });
+        });
+
+        $("#addStep").click(function(){
+        	$("#container").fadeOut();
+        	$("#stepContainer").delay(500).fadeIn();
+        	$("#stepName").val("");
+	        		$("#stepDesc").val("");
+	        		$("#stepID").attr("stepID",undefined);
+	        		$("#resourceLink1").val("");
+	        		$("#resourceLink2").val("");
+	        		$("#resourceLink3").val("");
+	        		$("#resourceLink4").val("");
+        });
+
+        $(".contentItem").click(function(){
+        	//console.log($(this).attr("id"));
+        	if($(this).attr("id") == "content0") {
+        		$("#stepContainer").fadeOut();
+        		$("#container").delay(500).fadeIn();
+        			
+        	}
+        	else {
+        		var pageid = $("#hiddenID").val();
+	        	var stepID = $(this).attr("uniqueStepId");
+	        	$("#container").fadeOut();
+	        	$("#stepContainer").delay(500).fadeIn();
+	        	$.ajax({
+	        		url : "http://bits-oasis.org/2014/discoverify/updatestep/"+stepID+"/" , 
+	        		type : "GET" , 
+	        		success : function(data) {
+	        			obj = data;
+	        			var num = obj.num;
+	        			$("#stepName").val(obj.short_description);
+	        			$("#stepDesc").val(obj.long_description);
+	        			$("#stepID").attr("stepID",stepID);
+	        			$("#resourceLink1").val(obj.links[0].url_link);
+	        			$("#resourceLink2").val(obj.links[1].url_link);
+	        			$("#resourceLink3").val(obj.links[2].url_link);
+	        			$("#resourceLink4").val(obj.links[3].url_link);
+	        		}
+	        	});
+        	}
+        });
+
+        $("#saveStep").click(function(){
+        	var pageid = $("#hiddenID").val();
+        	var stepID = $("#stepID").attr("stepID");
+        	var dat = {
+				"path_id" : pageid , 
+				"short_description" : $("#stepName").val() , 
+				"long_description" : $("#stepDesc").val() , 
+				"category1" : $("#resourceType1").val() , 
+				"url_link1" : $("#resourceLink1").val() ,
+				"category2" : $("#resourceType2").val() , 
+				"url_link2" : $("#resourceLink2").val() ,
+				"category3" : $("#resourceType3").val() , 
+				"url_link3" : $("#resourceLink3").val() ,
+				"category4" : $("#resourceType4").val() , 
+				"url_link4" : $("#resourceLink4").val()
+        	};
+        	
+        	if(stepID == undefined) {
+        		$.ajax({
+        			url : "http://bits-oasis.org/2014/discoverify/stepend/",
+        			data : dat ,
+        			type : "POST" , 
+        			success : function(data) {
+        				var obj = JSON.parse(data);
+        				if(obj.status == 1)
+        					$("#contentList").append("<div id='content"+obj.step_no+"'  uniqueStepId='"+obj.step_id+"' class='contentItem'>Step "+obj.step_no+" : "+obj.step_desc+"</div>");
+        			}
+        		});
+
+        	}
+        	else {
+        		$.ajax({
+        			url : "http://bits-oasis.org/2014/discoverify/updatestep/"+stepID+"/",
+        			data : dat ,
+        			type : "POST" , 
+        			success : function(data) {
+        				console.log(data);
+        			}
+        		});
+        	}
+        	
+        });
+
+/*
+        function refreshBox() {
+	        $("#stepContainer").html('<div id="Step Description"></div>
+	        	<input type="text" id="stepID" val="" hidden>
+	        	<input type="text" id="stepName" >
+	        	<textarea type="text" id="stepDesc" ></textarea>
+	        	Resources : 
+	        	<div id="resources">
+	        		<div id="resource1" class="resourceWrapper">
+		        		<select name="resourceType1" id="resourceType1" class="resourceType">
+							<option value="video">Video</option>
+							<option value="book">Book</option>
+							<option value="blog">Blog</option>
+							<option value="misc">Misc</option>
+						</select>
+						<input type="text" id="resourceLink1" class="resourceLink">
+	        		</div>
+	        		<div id="resource2" class="resourceWrapper">
+		        		<select name="resourceType2" id="resourceType2" class="resourceType">
+							<option value="video">Video</option>
+							<option value="book">Book</option>
+							<option value="blog">Blog</option>
+							<option value="misc">Misc</option>
+						</select>
+						<input type="text" id="resourceLink2" class="resourceLink">
+	        		</div>
+	        		<div id="resource3" class="resourceWrapper">
+		        		<select name="resourceType3" id="resourceType3" class="resourceType">
+							<option value="video">Video</option>
+							<option value="book">Book</option>
+							<option value="blog">Blog</option>
+							<option value="misc">Misc</option>
+						</select>
+						<input type="text" id="resourceLink3" class="resourceLink">
+	        		</div>
+	        		<div id="resource4" class="resourceWrapper">
+		        		<select name="resourceType4" id="resourceType4" class="resourceType">
+							<option value="video">Video</option>
+							<option value="book">Book</option>
+							<option value="blog">Blog</option>
+							<option value="misc">Misc</option>
+						</select>
+						<input type="text" id="resourceLink4" class="resourceLink">
+	        		</div>
+	        	
+	        	<button id="saveStep">Save</button>');
+        };
+
+        */
+        
+
+
+
+
+    </script>
+   
+    </body>
+
+</html>
